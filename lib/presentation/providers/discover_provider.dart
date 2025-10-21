@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:widget_app_220836/domain/entities/video_post.dart';
-import 'package:widget_app_220836/infraestructure/models/local_video_model.dart';
-import 'package:widget_app_220836/shared/data/local_video_post.dart';
+import 'package:widgate_app_220836/domain/entities/video_post.dart';
+import 'package:widgate_app_220836/infraestruture/models/local_video_model.dart';
+import 'package:widgate_app_220836/Shared/data/localvideo_posts.dart';
 
 class DiscoverProvider extends ChangeNotifier {
+  // Nos permite cambiar el estado de la aplicacion
   bool initialLoading = true;
   List<VideoPost> videos = [];
 
+  DiscoverProvider() {
+    loadNextPage();
+  }
+
   Future<void> loadNextPage() async {
-    //todo: cargar videos
     await Future.delayed(const Duration(seconds: 2));
-    final List<VideoPost> newVideos = videoPost
-      .map((video) => LocalVideoModel.fromJson(video).toVideoPostEntity())
-      .toList();
+
+    final List<VideoPost> newVideos = localVideoPosts
+        .map((video) => LocalVideoModel.fromJs(video).toVideoPostEntity())
+        .toList();
 
     videos.addAll(newVideos);
     initialLoading = false;
